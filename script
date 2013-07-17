@@ -1,0 +1,33 @@
+Scripts:
+  tradesign:
+    Script:
+    - '@IF i <totalexp:<playername>> < 825'
+    - '@PLAYER waOS &b// &cYou do not have 825+ exp (level 30)!'
+    - '@SETBOOL $trade_sign_active.<playername> false'
+    - '@EXIT'
+    - '@ELSE'
+    - '@SETBOOL $trade_sign_active.<playername> false'
+    - '@SETSTR $locLook.<playername> <triggerloc>'
+    - '@SETINT $tempXP.<playername> <totalexp:<playername>>'
+    - '@SUBINT $tempXP.<playername> 825'
+    - '@CMDCON exp set <playername> $tempXp.<playername>'
+    - '@SETBOOL $expClaim.<var:$locLook.<playername>> true'
+    - '@SETSTR $expClaimOwner.<var:$locLook.<playername>> <playername>'
+    - '@PAUSE 2'
+    - '@SIGNTEXT <triggerloc> 1 &b/&f waOS &b/'
+    - '@SIGNTEXT <triggerloc> 2 &3EXP-PRO-9000'
+    - '@SIGNTEXT <triggerloc> 3 &f>>> 30 <<<'
+    - '@SIGNTEXT <triggerloc> 4 &8<playername>'
+    - '@PLAYER waOS &b// &3Sign created. Break it to recieve your XP back.'
+    - '@ENDIF'
+  evac:
+    Script:
+    - '@SETBLOCK $block.latest <triggerloc>'
+    - '@SIGNTEXT <triggerloc> 1 &b/&f waOS &b/'
+    - '@SIGNTEXT <triggerloc> 2 &3EXP-PRO-9000'
+    - '@SIGNTEXT <triggerloc> 3 &f>>> 30 <<<'
+    - '@SIGNTEXT <triggerloc> 4 &8Restored'
+    - '@PLAYER waOS &b// &cTHAT IS NOT YOUR XP SIGN, NUMPTY!'
+    - '@PAUSE 1'
+    - '@IF b <takeitem:<playername>:323:1> = true'
+    - '@ENDIF'
