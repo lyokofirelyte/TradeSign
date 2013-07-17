@@ -1,0 +1,27 @@
+  BlockPlaced:
+    CoolDown: 0
+    Script:
+    - '@IF i <blockid> = 63'
+    - '@OR i <blockid> = 68'
+    - '@OR i <blockid> = 323'
+    - '@SETSTR $sign_owner.<triggerloc> <playername>'
+    - '  @IF b $trade_sign_active.<playername> = true'
+    - '  @CALL tradesign:tradesign'
+    - '  @GETBLOCK $bt.<triggerloc> <triggerloc>'
+    - '  @ENDIF'
+    - '@ENDIF'
+    - '@ADDINT $overwatch_total_placed.<playername> 1'
+  BlockBreak:
+    CoolDown: 0
+    Script:
+    - '@GETBLOCK $block.latest <triggerloc>'
+    - '@IF b $expClaim.<triggerloc> = true'
+    - '@AND s $expClaimOwner.<triggerloc> = <playername>'
+    - '@SETBOOL $expClaim.<triggerloc> false'
+    - '@CMDCON exp give <playername> 825'
+    - '@PLAYER waOS &b// &3Here is your XP back!'
+    - '@ENDIF'
+    - '@IF b $expClaim.<triggerloc> = true'
+    - '@AND s $expClaimOwner.<triggerloc> != <playername>'
+    - '@CALL tradesign:evac'
+    - '@ENDIF'
